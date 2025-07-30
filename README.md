@@ -1,2 +1,2 @@
 # Cultural-Aware-Encoder-Decoder
-Cultural-Aware-Encoder-Decoder coda
+Cultural-Aware-Encoder-Decoder code
