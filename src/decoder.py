@@ -15,7 +15,7 @@ def chunked_matrix_multiplication(x, e1_embedded_all, chunk_size=16):
         chunk = x[i:i+chunk_size]
         result = torch.mm(chunk, e1_embedded_all.transpose(1, 0))
         results.append(result)
-    return results  # 返回 list of Tensor，不拼接
+    return results  
 
 class TimeConvTransR(torch.nn.Module):
     def __init__(self, num_relations, embedding_dim, input_dropout=0, hidden_dropout=0, feature_map_dropout=0, channels=50, kernel_size=3, use_bias=True):
@@ -106,15 +106,10 @@ class TimeConvTransE(torch.nn.Module):
             x = self.bn2(x)
         x = F.relu(x)
         if partial_embeding is None:
-            x = torch.mm(x, e1_embedded_all.transpose(1, 0))# 原来的代码
+            x = torch.mm(x, e1_embedded_all.transpose(1, 0))
         else:
-            # print('xxxxxxxxxxxxx',x.shape)
-            # # print('e1_embedded_all.transpose',e1_embedded_all.transpose.shape)
-            # print('e1_embedded_all.transpose(1, 0)e1_embedded_all.transpose(1, 0)e1_embedded_all.transpose(1, 0)',e1_embedded_all.transpose(1, 0).shape)
-            # print('partial_embedingpartial_embeding',partial_embeding.shape)
            
-            x = torch.mm(x, e1_embedded_all.transpose(1, 0))# 原来的代码
-            x = torch.mul(x, partial_embeding)
+            x = torch.mm(x, e1_embedded_all.transpose(1, 0))
         return x
 
     def forward_slow(self, embedding, emb_rel, triplets):
